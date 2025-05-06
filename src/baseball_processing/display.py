@@ -1,4 +1,5 @@
-__all__ = ["set_pandas_display_all", "reset_pandas_display_options"]
+import pandas as pd
+__all__ = ["set_pandas_display_all", "reset_pandas_display"]
 
 def set_pandas_display_all():
     """
@@ -9,7 +10,7 @@ def set_pandas_display_all():
     pd.set_option('display.width', None)
     pd.set_option('display.max_colwidth', None)
 
-def reset_pandas_display_options():
+def reset_pandas_display():
     """
     Reset pandas display options to their default values.
     """

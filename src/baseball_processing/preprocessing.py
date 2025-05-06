@@ -5,8 +5,8 @@ def remove_columns(df, columns_to_keep):
     Remove certain columns from a specific DataFrame.
 
     Parameters:
-        df (pandas.DataFrame): A DataFrame containing the columns to remove.
-        columns_to_keep (list of string): List of strings of columns to remove from DataFrame.
+        df (pandas.DataFrame): A DataFrame containing data.
+        columns_to_keep (list of string): List of strings of columns to keep from DataFrame.
 
     Returns:
         pandas.DataFrame: A DataFrame with stripped columns
@@ -24,7 +24,7 @@ def remove_nan(df, na_columns):
 
     Parameters:
         df (pandas.DataFrame): A DataFrame containing the columns to remove.
-        na_columns (list of string): List of strings of columns to remove NAs from DataFrame.
+        na_columns (list of string): List of strings of columns to remove NAs from in a given DataFrame.
 
     Returns:
         pandas.DataFrame: A DataFrame with NAs stripped.
