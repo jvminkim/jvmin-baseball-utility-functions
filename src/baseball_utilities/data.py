@@ -14,6 +14,24 @@ def get_connection():
     )
     return engine
 
+def upload_dataframe(df, table_name):
+    """
+    Upload DataFrame to local PostgreSQL server.
+
+    Parameters:
+        table_name (string): Name of the table in PostgreSQL server.
+        df (pandas.DataFrame): DataFrame to upload.
+    Returns:
+        None
+    """
+    engine = get_connection()
+    df.to_sql(
+        name=table_name,
+        con=engine,
+        if_exists='replace'
+    )
+    
+
 def query_year(year, where_clause=""):
     """
     Query Statcast data for a given year.
