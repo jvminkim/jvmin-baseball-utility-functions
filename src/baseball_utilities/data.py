@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 import pandas as pd
-__all__ = ["get_connection", "get_pbp_data", "get_description_data", "get_table", "get_swing_data"]
+__all__ = ["get_connection", "upload_dataframe", "get_table", "get_pbp_data", "get_description_data", "get_table", "get_swing_data"]
 
 def get_connection():
     """
@@ -10,7 +10,7 @@ def get_connection():
         sqlalchemy.engine.base.Engine: SQLAlchemy engine connected to the local PostgreSQL server.
     """
     engine = create_engine(
-        "postgresql+psycopg2://postgres:jamin@localhost:5432/statcast"
+        "postgresql+psycopg://postgres:jamin@localhost:5432/statcast"
     )
     return engine
 
@@ -30,6 +30,30 @@ def upload_dataframe(df, table_name):
         con=engine,
         if_exists='replace'
     )
+
+def get_table(table_name, columns = None):
+    """
+    Query specific table
+
+    Parameters:
+        table_name (string): String of table name to query
+        columns (list of strings): List of columns to query
+
+    Returns:
+        pandas.DataFrame: A DataFrame containing the StatCast data for the specified year.
+
+    Examples:
+        >>> get_table("statcast_2025")
+    """
+    conn = get_connection()
+    if columns:
+        col_str = ", ".join(columns)
+    else:
+        col_str = "*"
+    query = f""" SELECT {col_str} FROM {table_name};"""
+
+    df = pd.read_sql(query, conn)
+    return df
     
 
 def query_year(year, where_clause=""):
@@ -117,7 +141,7 @@ def get_description_data(year):
     df = pd.read_sql(query,conn)
     return df
 
-def get_table(table_name):
+#def get_table(table_name):
     """
     Query a specific table from the database.
 
@@ -131,14 +155,14 @@ def get_table(table_name):
         >>> get_table("fangraphs_batting_min_400_2024")
         Query the batters who have minimum 400 plate appearances in 2024
     """
-    conn = get_connection()
-    query = f"""
-        SELECT * FROM {table_name}
-    """
+#    conn = get_connection()
+#    query = f"""
+#        SELECT * FROM {table_name}
+#    """
 
-    df = pd.read_sql(query, conn)
+#    df = pd.read_sql(query, conn)
 
-    return df
+#    return df
 
 
 
